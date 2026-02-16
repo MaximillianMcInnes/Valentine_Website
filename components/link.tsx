@@ -29,10 +29,9 @@ export default function Link({
   const posRef = useRef({ x: 0, y: 0 });
   const initRef = useRef(false);
 
-  // ✅ persist this across renders + effect reruns
-  const openedRef = useRef(false);
+  const wasOverlappingRef = useRef(false);
 
-  // ✅ decor arrangement persists (won't re-randomise on button press / rerender)
+
   const decorRef = useRef<Decor[] | null>(null);
 
   useEffect(() => {
@@ -320,10 +319,11 @@ export default function Link({
         y < ty + target.h &&
         y + dh > ty;
 
-      if (overlapTarget && !openedRef.current) {
-        openedRef.current = true;
+      if (overlapTarget && !wasOverlappingRef.current) {
         onOpenExplorer();
       }
+
+      wasOverlappingRef.current = overlapTarget;
 
       // --- decor pushing ---
       const linkFeet = {
