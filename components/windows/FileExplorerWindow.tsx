@@ -46,7 +46,7 @@ const FS: Node = {
                     { id: "pet5", name: "_.png", type: "file", src: "/photos/pets/5.jfif" },
                     { id: "pet6", name: "_.png", type: "file", src: "/photos/pets/6.jfif" },
                     { id: "pet7", name: "_.png", type: "file", src: "/photos/pets/7.jfif" },
-                    { id: "pet8", name: "_.png", type: "file", src: "/photos/pets/squirell.png" },
+                    { id: "pet8", name: "_.png", type: "file", src: "/photos/pets/squirrel.png" },
 
                   ],
                 },
