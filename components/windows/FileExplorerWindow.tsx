@@ -88,10 +88,12 @@ const FS: Node = {
                 },
                 {
                   id: "usphotos",
-                  name: "theres only one picture of us lmao",
+                  name: "us yay",
                   type: "folder",
                   children: [
                     { id: "omi", name: "OMI.jpg", type: "file", src: "/photos/selfies/us3.jfif" },
+                    { id: "us1", name: "us2.jpg", type: "file", src: "/photos/selfies/usfinally.png" },
+
                   ],
                 },
                 {
