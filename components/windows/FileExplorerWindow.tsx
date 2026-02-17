@@ -46,6 +46,8 @@ const FS: Node = {
                     { id: "pet5", name: "_.png", type: "file", src: "/photos/pets/5.jfif" },
                     { id: "pet6", name: "_.png", type: "file", src: "/photos/pets/6.jfif" },
                     { id: "pet7", name: "_.png", type: "file", src: "/photos/pets/7.jfif" },
+                    { id: "pet8", name: "_.png", type: "file", src: "/photos/pets/squirell.png" },
+
                   ],
                 },
                 {
@@ -53,7 +55,12 @@ const FS: Node = {
                   name: "top 10 jokes",
                   type: "folder",
                   children: [
-                    { id: "joke1", name: "joke1.jpg", type: "file", src: "/photos/top10jokes/mem1.jfif" },
+                    { id: "joke1", name: ".jpg", type: "file", src: "/photos/top10jokes/mem1.jfif" },
+                    { id: "joke3", name: "headchair.jpg", type: "file", src: "/photos/top10jokes/headchair.jfif" },
+                    { id: "joke4", name: "puregymgood.jpg", type: "file", src: "/photos/top10jokes/puregymgood.jfif" },
+                    { id: "joke5", name: "haha.jpg", type: "file", src: "/photos/top10jokes/roncorn.jfif" },
+                    { id: "joke7", name: "_.jpg", type: "file", src: "/photos/top10jokes/puregymgood2.png" },
+
                   ],
                 },
                 {
@@ -87,6 +94,17 @@ const FS: Node = {
                     { id: "omi", name: "OMI.jpg", type: "file", src: "/photos/selfies/us3.jfif" },
                   ],
                 },
+                {
+                  id: "cooking",
+                  name: "cooking...",
+                  type: "folder",
+                  children: [
+                    { id: "ag", name: "_.jpg", type: "file", src: "/photos/cooking/cooking.jfif" },
+                    { id: "agh", name: "_.jpg", type: "file", src: "/photos/cooking/cooking2.jfif" },
+                    { id: "aghj", name: "_.jpg", type: "file", src: "/photos/cooking/cooking3.png" },
+
+                  ],
+                }
               ],
             },
 
