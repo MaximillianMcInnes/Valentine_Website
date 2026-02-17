@@ -115,6 +115,10 @@ const FS: Node = {
               type: "folder",
               children: [
                 { id: "vlg1", name: "Vlog 1", type: "file", youtubeId: "Vo4g1Syf1to" },
+                { id: "vlgpicture", name: ".", type: "file", src: "/photos/moviephotos/cool.JPG" },
+                { id: "vlg2", name: "Vlog 2", type: "file", youtubeId: "g4KuPgWy7g8" },
+                { id: "vlg3", name: "Vlog 3", type: "file", youtubeId: "Gf6pifI4k2M" },
+
                 // Add more:
                 // { id: "vlg2", name: "Vlog 2", type: "file", youtubeId: "ANOTHER_ID" },
               ],
@@ -152,6 +156,20 @@ function findPath(root: Node, targetId: string): Node[] | null {
   }
   return null;
 }
+
+function ytThumb(id: string, quality: "max" | "hq" | "mq" | "sd" = "hq") {
+  const q =
+    quality === "max"
+      ? "maxresdefault"
+      : quality === "sd"
+      ? "sddefault"
+      : quality === "mq"
+      ? "mqdefault"
+      : "hqdefault";
+  return `https://i.ytimg.com/vi/${id}/${q}.jpg`;
+}
+
+
 
 function nodeToPath(nodes: Node[]) {
   const names = nodes.map((n) => n.name);
@@ -391,11 +409,21 @@ export default function FileExplorerWindow({
                       if (it.type === "file" && it.content) setOpenFile(it);
                     }}
                   >
-                    {it.src ? (
-                      <img className="thumbImg" src={it.src} alt={it.name} />
-                    ) : (
-                      <div className="thumbIcon">{it.type === "folder" ? "📁" : it.youtubeId ? "🎬" : "📄"}</div>
-                    )}
+                  {it.src ? (
+                    <img className="thumbImg" src={it.src} alt={it.name} />
+                  ) : it.youtubeId ? (
+                    <div className="thumbYt">
+                      <img
+                        className="thumbImg"
+                        src={ytThumb(it.youtubeId, "hq")}
+                        alt={it.name}
+                        loading="lazy"
+                      />
+                      <div className="thumbPlay">▶</div>
+                    </div>
+                  ) : (
+                    <div className="thumbIcon">{it.type === "folder" ? "📁" : "📄"}</div>
+                  )}
                     <div className="thumbName">{it.name}</div>
                   </button>
                 ))}
@@ -472,14 +500,17 @@ export default function FileExplorerWindow({
             </div>
 
             <div className="viewerVideoWrap">
-              <iframe
-                className="viewerVideo"
-                src={`https://www.youtube-nocookie.com/embed/${currentVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
-                title={currentVideo.name}
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-              />
+              <div className="viewerVideoAspect">
+                <iframe
+                  className="viewerVideo"
+                  src={`https://www.youtube-nocookie.com/embed/${currentVideo.youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+                  title={currentVideo.name}
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
             </div>
+
 
             <div className="viewerBottom">
               <button className="viewerBtn" onClick={prevVideo}>

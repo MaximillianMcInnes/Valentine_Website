@@ -538,3 +538,63 @@ a { text-decoration: none; color: inherit; }
   border-bottom-color: #fff;
   border-right-color: #fff;
 }
+
+
+
+/* Make the modal bigger + responsive */
+.viewerModal {
+  width: min(1000px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Video wrapper should take space nicely */
+.viewerVideoWrap {
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 16:9 aspect ratio box */
+.viewerVideoAspect {
+  width: min(960px, 88vw);
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Fill the aspect box */
+.viewerVideo {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Video thumbnails in the grid */
+.thumbYt {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.thumbPlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 42px;
+  opacity: 0.9;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+.thumbYt .thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
