@@ -97,6 +97,28 @@ const FS: Node = {
                   ],
                 },
                 {
+                  id: "favourites",
+                  name: "favourites",
+                  type: "folder",
+                  children: [
+                    {
+                      id: "ethan",
+                      name: "ethan",
+                      type: "folder",
+                      children: [
+                      ],
+                    },
+                    {
+                      id: "maggie",
+                      name: "maggie",
+                      type: "folder",
+                      children: [
+                      ],
+                    },
+                  ],
+                },
+
+                {
                   id: "cooking",
                   name: "cooking...",
                   type: "folder",
