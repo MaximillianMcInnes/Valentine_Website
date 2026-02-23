@@ -122,7 +122,7 @@ const FS: Node = {
                         { id: "arhcery", name: "_.jpg", type: "file", src: "/photos/selfies/archery.jfif" },
                         { id: "boring", name: "_.jpg", type: "file", src: "/photos/selfies/BORING.jfif" },
                         { id: "zelda", name: "_.jpg", type: "file", src: "/photos/selfies/zelda.jfif" },
-                        { id: "singing", name: "_.jpg", type: "file", src: "/photos/selfies/singing" },
+                        { id: "singing", name: "_.jpg", type: "file", src: "/photos/selfies/singing,png" },
 
 
 
