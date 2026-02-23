@@ -106,6 +106,9 @@ const FS: Node = {
                       name: "ethan",
                       type: "folder",
                       children: [
+                        { id: "smirk1", name: "_.jpg", type: "file", src: "/photos/selfies/smirk.jfif" },
+                        { id: "cookie2", name: "_.jpg", type: "file", src: "/photos/selfies/cookie.jfif" },
+
                       ],
                     },
                     {
@@ -113,6 +116,13 @@ const FS: Node = {
                       name: "maggie",
                       type: "folder",
                       children: [
+                        { id: "maggiecute", name: "_.jpg", type: "file", src: "/photos/selfies/maggiecute.jfif" },
+                        { id: "arhcery", name: "_.jpg", type: "file", src: "/photos/selfies/archery.jfif" },
+                        { id: "boring", name: "_.jpg", type: "file", src: "/photos/selfies/BORING.jfif" },
+                        { id: "zelda", name: "_.jpg", type: "file", src: "/photos/selfies/zelda.jfif" },
+
+
+
                       ],
                     },
                   ],
