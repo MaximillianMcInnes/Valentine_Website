@@ -109,6 +109,8 @@ const FS: Node = {
                         { id: "smirk1", name: "_.jpg", type: "file", src: "/photos/selfies/smirk.jfif" },
                         { id: "cookie2", name: "_.jpg", type: "file", src: "/photos/selfies/cookie.jfif" },
                         { id: "icebucket", name: "_.jpg", type: "file", src: "/photos/selfies/icebucket.jfif" },
+                        { id: "ontrainagain", name: "WAAAHAHAHAHAHAH.jpg", type: "file", src: "/photos/selfies/ethanontrain.jfif" },
+
                         
 
                       ],
@@ -121,12 +123,7 @@ const FS: Node = {
                         { id: "maggiecute", name: "_.jpg", type: "file", src: "/photos/selfies/maggiecute.jfif" },
                         { id: "arhcery", name: "_.jpg", type: "file", src: "/photos/selfies/archery.jfif" },
                         { id: "boring", name: "_.jpg", type: "file", src: "/photos/selfies/BORING.jfif" },
-                        { id: "zelda", name: "_.jpg", type: "file", src: "/photos/selfies/zelda.jfif" },
-                        { id: "singing", name: "_.jpg", type: "file", src: "/photos/selfies/singing,png" },
-
-
-
-
+                        { id: "zeldagirl", name: "_.jpg", type: "file", src: "/photos/selfies/zelda.jfif" },
                       ],
                     },
                   ],
