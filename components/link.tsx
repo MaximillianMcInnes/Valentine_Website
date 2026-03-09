@@ -7,6 +7,52 @@ type Dir = "down" | "left" | "right" | "up";
 // ✅ move these ABOVE usage so TS is happy
 type DecorKind = "rose" | "popcorn" | "tulip";
 
+type CharacterKind = "link" | "zelda"
+
+type SpriteConfig = {
+  src: string;
+  originX: number;
+  originY: number;
+  tile: number;
+  tileGap: number;
+  frameColsForDir: Record<Dir, number>;
+  usesFlipLeft: boolean;
+}
+
+
+const SPRITES: Record<CharacterKind, SpriteConfig> = {
+  link: {
+    src: "/sprites/spritesheet.png",
+    originX: 1,
+    originY: 11,
+    tile: 16,
+    tileGap: 17,
+    frameColsForDir: {
+      down: 0,
+      right: 2,
+      left: 2,
+      up: 4,
+    },
+    usesFlipLeft: true,
+  },
+
+  zelda: {
+    src: "/sprites/zeldaspritesheet.png",
+    originX: 0,
+    originY: 2,
+    tile: 22,
+    tileGap: 20,
+    frameColsForDir: {
+      down: 0,
+      right: 2,
+      left: 6,
+      up: 4,
+    },
+    usesFlipLeft: false,
+  },
+};
+
+
 type Decor = {
   kind: DecorKind;
   x: number;
@@ -15,6 +61,8 @@ type Decor = {
   vy: number;
   size: number;
 };
+
+
 
 export default function Link({
   spriteSrc = "/sprites/spritesheet.png",
@@ -31,7 +79,8 @@ export default function Link({
 
   const wasOverlappingRef = useRef(false);
 
-
+  const characterRef = useRef<CharacterKind>("zelda");
+  const imagesRef = useRef<Record<CharacterKind, HTMLImageElement> | null>(null);
   const decorRef = useRef<Decor[] | null>(null);
 
   useEffect(() => {
@@ -47,6 +96,8 @@ export default function Link({
     const ORIGIN_Y = 11;
 
     const WALK_COLS = [0, 1, 2];
+
+
 
     const FRAME_COL_FOR_DIR: Record<Dir, number> = {
       down: 0,
@@ -81,6 +132,14 @@ export default function Link({
     let y = posRef.current.y;
     let dir: Dir = "down";
 
+    const dog = {
+      x: () => window.innerWidth / 2 + 100,
+      y: () => window.innerHeight / 2,
+      size: 48,
+    }
+
+    let showDogText = false;
+
     const target = {
       w: 220,
       h: 90,
@@ -104,6 +163,8 @@ export default function Link({
       rose: new Image(),
       tulip: new Image(),
     };
+    const dogImg = new Image()
+    dogImg.src = "/sprites/chihuahua.png"
 
     decorImgs.popcorn.src = "/sprites/roncorn.png";
     decorImgs.rose.src = "/sprites/rose.png";
@@ -134,6 +195,31 @@ export default function Link({
       return arr;
     };
 
+
+    if (!imagesRef.current) {
+      const linkImg = new Image();
+      const zeldaImg = new Image();
+
+      linkImg.src = SPRITES.link.src;
+      zeldaImg.src = SPRITES.zelda.src;
+
+      imagesRef.current = {
+        link: linkImg,
+        zelda: zeldaImg,
+      };
+
+      let loadedCount = 0;
+      const markLoaded = () => {
+        loadedCount++;
+        if (loadedCount >= 2) setLoaded(true);
+      };
+
+      linkImg.onload = markLoaded;
+      zeldaImg.onload = markLoaded;
+    }
+
+    const images = imagesRef.current;
+
     // ✅ generate ONCE (unless you explicitly clear decorRef.current somewhere)
     if (!decorRef.current) {
       decorRef.current = spawnDecor();
@@ -158,6 +244,10 @@ export default function Link({
     const onKeyDown = (e: KeyboardEvent) => {
       keys.add(e.key);
       if (e.key === "Enter") onOpenExplorer();
+      
+      if (e.key.toLowerCase() === "q") {
+        characterRef.current = characterRef.current === "link" ? "zelda" : "link";
+      }
     };
     const onKeyUp = (e: KeyboardEvent) => keys.delete(e.key);
 
@@ -171,6 +261,39 @@ export default function Link({
       bottom: () => window.innerHeight - 60,
     };
 
+
+  
+  const drawDogSpeech = () => {
+    if (!showDogText) return;
+
+    const dx = dog.x();
+    const dy = dog.y();
+
+    const text = "bark awkwardly";
+    const padding = 8;
+
+    ctx.save();
+
+    ctx.font = "14px Tahoma, Arial, sans-serif";
+    const width = ctx.measureText(text).width;
+
+    const boxW = width + padding * 2;
+    const boxH = 30;
+    const boxX = dx + dog.size + 10;
+    const boxY = dy - 6;
+
+    ctx.fillStyle = "white";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 2;
+
+    ctx.fillRect(boxX, boxY, boxW, boxH);
+    ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+    ctx.fillStyle = "black";
+    ctx.fillText(text, boxX + padding, boxY + 20);
+
+    ctx.restore();
+  };
     const drawTarget = () => {
       const tx = target.x();
       const ty = target.y();
@@ -196,6 +319,23 @@ export default function Link({
       ctx.fillText("(walk into this)", tx + 10, ty + 66);
 
       ctx.restore();
+    };
+
+
+    const drawDog = () => {
+      if (!dogImg || dogImg.naturalWidth === 0) return;
+
+      const dx = dog.x();
+      const dy = dog.y();
+      const s = dog.size;
+
+      ctx.drawImage(
+        dogImg,
+        Math.round(dx),
+        Math.round(dy),
+        s,
+        s
+      );
     };
 
     const drawDecor = () => {
@@ -231,33 +371,48 @@ export default function Link({
       ctx.fillStyle = "rgba(255,255,255,0.9)";
       ctx.font = "14px Tahoma, Arial, sans-serif";
       ctx.fillText("Arrow keys / WASD to walk", 24, 28);
+      ctx.fillText("Q to switch Link/Zelda", 24, 48);
 
       ctx.fillStyle = "rgba(255,255,255,0.6)";
       ctx.font = "12px Tahoma, Arial, sans-serif";
     };
 
-    const drawLink = () => {
-      if (img.naturalWidth === 0) return;
+    const drawCharacter = () => {
+      const active = characterRef.current;
+      const cfg = SPRITES[active];
+      const img = images[active];
+
+      if (!img || img.naturalWidth === 0) return;
 
       const local = frame % 2;
-      const baseCol = FRAME_COL_FOR_DIR[dir];
+      const baseCol = cfg.frameColsForDir[dir];
       const col = baseCol + local;
 
-      const sx = ORIGIN_X + col * TILE_GAP;
-      const sy = ORIGIN_Y;
+      const sx = cfg.originX + col * cfg.tileGap;
+      const sy = cfg.originY;
 
-      const dw = TILE * SCALE;
-      const dh = TILE * SCALE;
+      const dw = cfg.tile * SCALE;
+      const dh = cfg.tile * SCALE;
 
       ctx.save();
       ctx.imageSmoothingEnabled = false;
 
-      if (dir === "left") {
+      if (dir === "left" && cfg.usesFlipLeft) {
         ctx.translate(Math.round(x) + dw, Math.round(y));
         ctx.scale(-1, 1);
-        ctx.drawImage(img, sx, sy, TILE, TILE, 0, 0, dw, dh);
+        ctx.drawImage(img, sx, sy, cfg.tile, cfg.tile, 0, 0, dw, dh);
       } else {
-        ctx.drawImage(img, sx, sy, TILE, TILE, Math.round(x), Math.round(y), dw, dh);
+        ctx.drawImage(
+          img,
+          sx,
+          sy,
+          cfg.tile,
+          cfg.tile,
+          Math.round(x),
+          Math.round(y),
+          dw,
+          dh
+        );
       }
 
       ctx.restore();
@@ -309,7 +464,21 @@ export default function Link({
       // --- collision with target ---
       const dw = TILE * SCALE;
       const dh = TILE * SCALE;
+      
+      const dx = dog.x();
+      const dy = dog.y();
 
+      const nearDog = 
+        x < dx + dog.size + 20 &&
+        x + dw > dx - 20 &&
+        y < dy + dog.size + 20 &&
+        y + dh > dy - 20;
+
+
+
+      showDogText = nearDog;
+
+      
       const tx = target.x();
       const ty = target.y();
 
@@ -374,8 +543,10 @@ export default function Link({
       drawBackground();
       drawDecor();
       drawTarget();
+      drawDog();
+      drawDogSpeech();
       drawUI();
-      drawLink();
+      drawCharacter();
 
       requestAnimationFrame(step);
     };
