@@ -93,6 +93,7 @@ const FS: Node = {
                   children: [
                     { id: "omi", name: "OMI.jpg", type: "file", src: "/photos/selfies/us3.jfif" },
                     { id: "us1", name: "us2.jpg", type: "file", src: "/photos/selfies/usfinally.png" },
+                    { id: "us2", name: "usAGAIN.jfif", type: "file", src: "/photos/selfies/ustuff.PNG"}
 
                   ],
                 },
